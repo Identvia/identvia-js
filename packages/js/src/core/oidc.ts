@@ -188,7 +188,7 @@ export class OidcClient {
    */
   async userinfo(accessToken: string, expectedSub?: string, transport: 'header' | 'body' = 'header'): Promise<Record<string, unknown> & { sub: string }> {
     const ep = await this.discovery.endpoint('userinfo_endpoint');
-    const init = transport === 'body'
+    const init: { method?: string; headers: Record<string, string>; body?: string } = transport === 'body'
       ? { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' }, body: new URLSearchParams({ access_token: accessToken }).toString() }
       : { headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' } };
     const { status, data } = await requestJson(this.fetchFn, ep, init);
