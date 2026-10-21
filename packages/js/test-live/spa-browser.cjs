@@ -1,14 +1,15 @@
 /**
  * Real Chrome + real Identvia (stage 4) + examples/spa-vanilla served from http://localhost:4300.
  * Proves the SPA client works cross-origin (CORS on token/userinfo/revoke), under a strict CSP, with redirect and popup.
- *   NODE_PATH=/workspace/pwtest/node_modules IDENTVIA_LIVE_STATE=/tmp/live-spa.json node test-live/spa-browser.cjs
+ *   IDENTVIA_LIVE_STATE=./live-spa.json IDENTVIA_MAILDIR=<dev server mail dir> node test-live/spa-browser.cjs   (needs playwright)
  */
 const { chromium } = require('playwright');
 const { spawn } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
 const S = JSON.parse(fs.readFileSync(process.env.IDENTVIA_LIVE_STATE, 'utf8'));
-const MAIL = process.env.IDENTVIA_MAILDIR || '/workspace/sdk-devserver/identvia/storage/mail';
+const MAIL = process.env.IDENTVIA_MAILDIR;
+if (!MAIL) throw new Error('Set IDENTVIA_MAILDIR to the dev server mail directory');
 let pass = 0, fail = 0;
 const check = (n, ok, d = '') => { ok ? pass++ : fail++; console.log(`${ok ? '  PASS' : '  FAIL'} ${n}${d ? `  [${d}]` : ''}`); };
 

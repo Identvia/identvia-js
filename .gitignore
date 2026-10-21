@@ -3,3 +3,12 @@ dist/
 coverage/
 *.tgz
 .env
+.next/
+build/
+out/
+*.log
+.env*
+!.env.example
+.turbo/
+.DS_Store
+live-*.json
