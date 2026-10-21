@@ -1,0 +1,1 @@
+{ "name": "identvia-example-express", "private": true, "type": "module", "scripts": { "start": "node server.mjs" }, "dependencies": { "@identvia/js": "workspace:*", "express": "^4.21.2" } }

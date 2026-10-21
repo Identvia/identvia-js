@@ -182,9 +182,16 @@ export class OidcClient {
     return { tokens, claims };
   }
 
-  async userinfo(accessToken: string, expectedSub?: string): Promise<Record<string, unknown> & { sub: string }> {
+  /**
+   * `transport: 'body'` sends the token as a form parameter (RFC 6750 §2.2) in a CORS "simple" POST. Browsers use it
+   * because an Authorization header triggers a preflight, which Identvia servers up to 2026-10-21_4 do not answer.
+   */
+  async userinfo(accessToken: string, expectedSub?: string, transport: 'header' | 'body' = 'header'): Promise<Record<string, unknown> & { sub: string }> {
     const ep = await this.discovery.endpoint('userinfo_endpoint');
-    const { status, data } = await requestJson(this.fetchFn, ep, { headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' } });
+    const init = transport === 'body'
+      ? { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' }, body: new URLSearchParams({ access_token: accessToken }).toString() }
+      : { headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' } };
+    const { status, data } = await requestJson(this.fetchFn, ep, init);
     if (status === 401) throw new TokenError('invalid_token', 'The access token is invalid or expired.', 401);
     if (status !== 200) throw new HttpError(`Userinfo request failed (HTTP ${status}).`, status);
     if (typeof data.sub !== 'string') throw new ValidationError('Userinfo response has no sub.');

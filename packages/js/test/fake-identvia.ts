@@ -152,7 +152,7 @@ export async function createFake(opt: FakeOptions = {}) {
         return json(400, { error: 'unsupported_grant_type' });
       }
       case '/oauth/userinfo': {
-        const t = (headers.authorization ?? '').replace(/^Bearer /, '');
+        const t = (headers.authorization ?? '').replace(/^Bearer /, '') || body?.get('access_token') || '';
         const a = access.get(t);
         if (!a || a.exp < now() || (a.family && revokedFamilies.has(a.family))) return json(401, { error: 'invalid_token' });
         return json(200, { sub: a.sub, email: state.email, email_verified: true });

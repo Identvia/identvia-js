@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Identvia SPA example</title>
+  <!-- Strict CSP: no inline script or style. The button stylesheet is a constructable stylesheet. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' http://localhost:8180 https://id.identvia.com; img-src 'self' data:">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main>
+    <h1>Identvia SPA example</h1>
+    <div id="signed-out" hidden>
+      <p>Public client, Authorization Code + PKCE. No secrets in this page.</p>
+      <button class="identvia-btn" id="signin" data-theme="dark">Sign in with Identvia</button>
+      <button class="identvia-btn" id="signin-popup" data-text="continue">Continue with Identvia (popup)</button>
+    </div>
+    <div id="signed-in" hidden>
+      <p>Signed in as <strong id="who"></strong></p>
+      <p><code id="sub"></code></p>
+      <button id="userinfo">Call userinfo</button>
+      <button id="refresh">Force token refresh</button>
+      <button id="signout">Sign out</button>
+      <pre id="out"></pre>
+    </div>
+    <p id="error" role="alert"></p>
+  </main>
+  <script src="/button.js"></script>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

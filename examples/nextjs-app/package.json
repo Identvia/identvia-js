@@ -1,0 +1,1 @@
+{ "name": "identvia-example-nextjs", "private": true, "scripts": { "dev": "next dev", "build": "next build" }, "dependencies": { "@identvia/js": "^0.1.0", "@identvia/react": "^0.1.0", "next": "^15.0.3", "react": "^18.3.1", "react-dom": "^18.3.1" } }

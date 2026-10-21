@@ -5,27 +5,86 @@
   "license": "MIT",
   "author": "Identvia <hello@identvia.com>",
   "homepage": "https://id.identvia.com/developers/docs/js",
-  "repository": { "type": "git", "url": "git+https://github.com/identvia/identvia-js.git", "directory": "packages/js" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/identvia/identvia-js.git",
+    "directory": "packages/js"
+  },
   "bugs": "https://github.com/identvia/identvia-js/issues",
-  "keywords": ["identvia", "oidc", "openid-connect", "oauth2", "pkce", "sso", "authentication", "agents", "ciba", "token-exchange"],
+  "keywords": [
+    "identvia",
+    "oidc",
+    "openid-connect",
+    "oauth2",
+    "pkce",
+    "sso",
+    "authentication",
+    "agents",
+    "ciba",
+    "token-exchange"
+  ],
   "type": "module",
   "sideEffects": false,
-  "engines": { "node": ">=18.17" },
-  "files": ["dist", "README.md", "CHANGELOG.md", "LICENSE"],
+  "engines": {
+    "node": ">=18.17"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": { "import": { "types": "./dist/index.d.ts", "default": "./dist/index.js" }, "require": { "types": "./dist/index.d.cts", "default": "./dist/index.cjs" } },
-    "./server": { "import": { "types": "./dist/server.d.ts", "default": "./dist/server.js" }, "require": { "types": "./dist/server.d.cts", "default": "./dist/server.cjs" } },
-    "./express": { "import": { "types": "./dist/express.d.ts", "default": "./dist/express.js" }, "require": { "types": "./dist/express.d.cts", "default": "./dist/express.cjs" } },
-    "./next": { "import": { "types": "./dist/next.d.ts", "default": "./dist/next.js" }, "require": { "types": "./dist/next.d.cts", "default": "./dist/next.cjs" } },
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./server": {
+      "import": {
+        "types": "./dist/server.d.ts",
+        "default": "./dist/server.js"
+      },
+      "require": {
+        "types": "./dist/server.d.cts",
+        "default": "./dist/server.cjs"
+      }
+    },
+    "./express": {
+      "import": {
+        "types": "./dist/express.d.ts",
+        "default": "./dist/express.js"
+      },
+      "require": {
+        "types": "./dist/express.d.cts",
+        "default": "./dist/express.cjs"
+      }
+    },
+    "./next": {
+      "import": {
+        "types": "./dist/next.d.ts",
+        "default": "./dist/next.js"
+      },
+      "require": {
+        "types": "./dist/next.d.cts",
+        "default": "./dist/next.cjs"
+      }
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
     "build": "tsup",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:live": "vitest run -c vitest.live.config.ts"
   },
   "dependencies": {
     "jose": "^5.9.6"

@@ -1,0 +1,1 @@
+{ "name": "identvia-example-spa-vanilla", "private": true, "type": "module", "scripts": { "start": "node server.mjs" } }
