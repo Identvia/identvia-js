@@ -4,7 +4,7 @@ import { ConfigurationError } from './errors.js';
 function webCrypto(): Crypto {
   const c = (globalThis as { crypto?: Crypto }).crypto;
   if (!c || typeof c.getRandomValues !== 'function' || !c.subtle) {
-    throw new ConfigurationError('Web Crypto is not available. Use a modern browser, Node 18+ or install a crypto polyfill.');
+    throw new ConfigurationError('Web Crypto is not available. Use a modern browser, Node 20+ or install a crypto polyfill.');
   }
   return c;
 }

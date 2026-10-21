@@ -1,6 +1,6 @@
 const B64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
 
-/** base64url without padding (RFC 4648 §5). Works in browsers, Node 18+, Deno, Bun and React Native. */
+/** base64url without padding (RFC 4648 §5). Works in browsers, Node 20+, Deno, Bun and React Native. */
 export function base64UrlEncode(bytes: Uint8Array): string {
   let out = '';
   let i = 0;

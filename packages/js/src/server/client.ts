@@ -46,7 +46,7 @@ export interface CibaStart { authReqId: string; expiresIn: number; interval: num
 export interface Introspection { active: boolean; [k: string]: unknown }
 
 /**
- * Server-side Identvia client (Node 18+, Bun, Deno, edge runtimes). Same flow as the browser client plus
+ * Server-side Identvia client (Node 20+, Bun, Deno, edge runtimes). Same flow as the browser client plus
  * confidential-client features: introspection, and the stage-5 delegation standards.
  */
 export class IdentviaServerClient extends OidcClient {
