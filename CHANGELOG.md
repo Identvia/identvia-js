@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.1 (2026-10-21)
+
+- **Breaking for Node 18:** `@identvia/js` now requires Node 20+ (`engines.node >=20`). Node 18 is end-of-life and has no global Web Crypto.
+- Fixed a TypeScript error in the userinfo request that broke the type-declaration build.
+- CI: quoted the pnpm `--filter "./packages/**"` glob, which bash was expanding. The Node matrix is now 20/22/24, with fail-fast off.
+- Removed build-box paths from the live SPA test, which now requires `IDENTVIA_MAILDIR`. Tightened `.gitignore`.
+
 ## 0.1.0 (2026-10-21)
 
 ### @identvia/js
