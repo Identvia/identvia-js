@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.2 (2026-11-05)
+
+- **Browser userinfo:** default `userinfoTransport` is now `auto` — try `GET` + `Authorization: Bearer` (CORS on Identvia stage 7+), then fall back to `POST` form `access_token` for older servers. Set `header` or `body` to force one mode.
+- `OidcClient.userinfo` accepts `auto` and always sends GET for the header transport (was method-less).
+
 ## 0.1.1 (2026-10-21)
 
 - **Breaking for Node 18:** `@identvia/js` now requires Node 20+ (`engines.node >=20`). Node 18 is end-of-life and has no global Web Crypto.

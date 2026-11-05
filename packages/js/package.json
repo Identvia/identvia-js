@@ -1,6 +1,6 @@
 {
   "name": "@identvia/js",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Sign in with Identvia for JavaScript and TypeScript: browser SPA client (PKCE, redirect + popup, refresh-token rotation) and Node server helpers (Express, Next.js, ID token verification).",
   "license": "MIT",
   "author": "Identvia <hello@identvia.com>",

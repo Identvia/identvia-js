@@ -15,8 +15,8 @@ export interface IdentviaClientOptions extends OidcConfig {
   refreshLeewaySec?: number;
   /** Default post-logout redirect (must be registered). */
   postLogoutRedirectUri?: string;
-  /** How fetchUserInfo() sends the token. Default 'body' (CORS simple request, no preflight). */
-  userinfoTransport?: 'header' | 'body';
+  /** How fetchUserInfo() sends the token. Default 'auto' (GET+Bearer, POST form fallback for older servers). */
+  userinfoTransport?: 'header' | 'body' | 'auto';
 }
 
 export interface Session {
@@ -40,7 +40,7 @@ export class IdentviaClient {
   private readonly leewayMs: number;
   private readonly popupRedirectUri: string;
   private readonly postLogoutRedirectUri: string | undefined;
-  private readonly userinfoTransport: 'header' | 'body';
+  private readonly userinfoTransport: 'header' | 'body' | 'auto';
   private readonly listeners = new Set<(e: AuthEvent) => void>();
   private refreshing: Promise<Session | null> | undefined;
   private cached: Session | null | undefined;
@@ -56,7 +56,7 @@ export class IdentviaClient {
     this.leewayMs = (opts.refreshLeewaySec ?? 60) * 1000;
     this.popupRedirectUri = opts.popupRedirectUri ?? this.oidc.redirectUri;
     this.postLogoutRedirectUri = opts.postLogoutRedirectUri;
-    this.userinfoTransport = opts.userinfoTransport ?? 'body';
+    this.userinfoTransport = opts.userinfoTransport ?? 'auto';
     const w = globalThis as { addEventListener?: (t: string, f: (e: StorageEvent) => void) => void };
     if (opts.storage === 'local' && typeof w.addEventListener === 'function') {
       w.addEventListener('storage', (e) => {

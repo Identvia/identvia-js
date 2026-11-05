@@ -183,14 +183,25 @@ export class OidcClient {
   }
 
   /**
-   * `transport: 'body'` sends the token as a form parameter (RFC 6750 §2.2) in a CORS "simple" POST. Browsers use it
-   * because an Authorization header triggers a preflight, which Identvia servers up to 2026-10-21_4 do not answer.
+   * Fetch UserInfo. `header` = GET + Authorization Bearer (needs CORS on Identvia stage 7+).
+   * `body` = POST form access_token (RFC 6750 §2.2; CORS "simple", works on older servers).
+   * `auto` = try header, fall back to body on a network/CORS failure (browser default).
    */
-  async userinfo(accessToken: string, expectedSub?: string, transport: 'header' | 'body' = 'header'): Promise<Record<string, unknown> & { sub: string }> {
+  async userinfo(accessToken: string, expectedSub?: string, transport: 'header' | 'body' | 'auto' = 'header'): Promise<Record<string, unknown> & { sub: string }> {
+    if (transport === 'auto') {
+      try {
+        return await this.userinfo(accessToken, expectedSub, 'header');
+      } catch (e) {
+        if (e instanceof TokenError || e instanceof ValidationError) throw e;
+        // Network/CORS failures arrive as HttpError with no status (see requestJson).
+        if (e instanceof HttpError && e.status !== undefined) throw e;
+        return await this.userinfo(accessToken, expectedSub, 'body');
+      }
+    }
     const ep = await this.discovery.endpoint('userinfo_endpoint');
     const init: { method?: string; headers: Record<string, string>; body?: string } = transport === 'body'
       ? { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' }, body: new URLSearchParams({ access_token: accessToken }).toString() }
-      : { headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' } };
+      : { method: 'GET', headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' } };
     const { status, data } = await requestJson(this.fetchFn, ep, init);
     if (status === 401) throw new TokenError('invalid_token', 'The access token is invalid or expired.', 401);
     if (status !== 200) throw new HttpError(`Userinfo request failed (HTTP ${status}).`, status);
