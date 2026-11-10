@@ -7,12 +7,17 @@
 # Delete that secret once trusted publishing is configured.
 #
 # A version that is already on npm is skipped, so re-running this workflow is safe.
-# Run it manually (workflow_dispatch) for a dry run: it builds, tests, packs and runs `npm publish --dry-run`.
+# Run it manually (workflow_dispatch) for a dry run, or tick "publish" to really publish the version on that branch: it builds, tests, packs and runs `npm publish --dry-run`.
 name: Release
 on:
   push:
     tags: ['v[0-9]+.[0-9]+.[0-9]+']
   workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Really publish (otherwise a dry run)'
+        type: boolean
+        default: false
 permissions: { contents: read }
 concurrency: { group: release-npm, cancel-in-progress: false }
 jobs:
@@ -49,12 +54,12 @@ jobs:
       - name: Publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          DRY_RUN: ${{ github.ref_type == 'tag' && '' || '--dry-run' }}
+          DRY_RUN: ${{ (github.ref_type == 'tag' || inputs.publish) && 'no' || 'yes' }}
         run: |
           # @identvia/js first: @identvia/react has it as a peer dependency.
           for p in packages/js packages/react; do
             name=$(node -p "require('./$p/package.json').name"); ver=$(node -p "require('./$p/package.json').version")
             tgz="$RUNNER_TEMP/pkgs/$(echo "$name" | sed 's/^@//; s/\//-/')-$ver.tgz"
             if npm view "$name@$ver" version >/dev/null 2>&1; then echo "$name@$ver is already on npm; skipping"; continue; fi
-            npm publish "$tgz" --access public --provenance $DRY_RUN
+            npm publish "$tgz" --access public --provenance $([ "$DRY_RUN" = yes ] && echo --dry-run)
           done
