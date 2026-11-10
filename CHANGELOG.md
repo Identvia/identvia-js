@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.3 (2026-11-09)
+
+- First release on the npm registry. Publishing runs from GitHub Actions (`release.yml`) with npm trusted publishing (OIDC) and provenance.
+- Package metadata: homepage `https://identvia.com`, repository `github.com/Identvia/identvia-js`, `bugs` and `publishConfig`. No code changes.
+- The package READMEs link to GitHub with absolute URLs, so the links work on npmjs.com.
+
 ## 0.1.2 (2026-11-05)
 
 - **Browser userinfo:** default `userinfoTransport` is now `auto` — try `GET` + `Authorization: Bearer` (CORS on Identvia stage 7+), then fall back to `POST` form `access_token` for older servers. Set `header` or `body` to force one mode.

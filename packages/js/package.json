@@ -1,16 +1,19 @@
 {
   "name": "@identvia/js",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Sign in with Identvia for JavaScript and TypeScript: browser SPA client (PKCE, redirect + popup, refresh-token rotation) and Node server helpers (Express, Next.js, ID token verification).",
   "license": "MIT",
   "author": "Identvia <hello@identvia.com>",
-  "homepage": "https://id.identvia.com/developers/docs/js",
+  "homepage": "https://identvia.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/identvia/identvia-js.git",
+    "url": "git+https://github.com/Identvia/identvia-js.git",
     "directory": "packages/js"
   },
-  "bugs": "https://github.com/identvia/identvia-js/issues",
+  "bugs": {
+    "url": "https://github.com/Identvia/identvia-js/issues",
+    "email": "hello@identvia.com"
+  },
   "keywords": [
     "identvia",
     "oidc",
@@ -97,5 +100,9 @@
     "tsup": "^8.3.5",
     "typescript": "^5.6.3",
     "vitest": "^2.1.8"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

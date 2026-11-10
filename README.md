@@ -1,14 +1,20 @@
 # Identvia for JavaScript & TypeScript
 
+[![npm @identvia/js](https://img.shields.io/npm/v/@identvia/js?label=%40identvia%2Fjs)](https://www.npmjs.com/package/@identvia/js)
+[![npm @identvia/react](https://img.shields.io/npm/v/@identvia/react?label=%40identvia%2Freact)](https://www.npmjs.com/package/@identvia/react)
+[![CI](https://github.com/Identvia/identvia-js/actions/workflows/ci.yml/badge.svg)](https://github.com/Identvia/identvia-js/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 Sign in with Identvia for browsers, Node.js, Express, Next.js and React.
 
 | Package | What it is |
 |---|---|
-| [`@identvia/js`](packages/js) | Browser SPA client (`IdentviaClient`): redirect and popup sign-in, silent refresh. Also includes `@identvia/js/server`, `/express` and `/next` |
-| [`@identvia/react`](packages/react) | `IdentviaProvider`, `useIdentvia()`, `<SignInWithIdentvia/>`, `<SignedIn/>`, `<SignedOut/>` |
+| [`@identvia/js`](https://www.npmjs.com/package/@identvia/js) | Browser SPA client (`IdentviaClient`): redirect and popup sign-in, silent refresh. Also includes `@identvia/js/server`, `/express` and `/next` |
+| [`@identvia/react`](https://www.npmjs.com/package/@identvia/react) | `IdentviaProvider`, `useIdentvia()`, `<SignInWithIdentvia/>`, `<SignedIn/>`, `<SignedOut/>` |
 
 ```bash
-npm install @identvia/js            # + @identvia/react for React
+npm install @identvia/js                    # browser, Node, Express, Next.js
+npm install @identvia/js @identvia/react    # React
 ```
 
 ## Quickstart: single-page app (public client, no secret)
